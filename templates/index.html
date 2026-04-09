@@ -1,0 +1,133 @@
+<!-- templates/index.html -->
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Classification</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: lab(89.25% 17.21 -11.25);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin-top: 50px;
+            background: lab(88.41% -9.27 -10.33);
+            padding: 25px;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        }
+
+        /* Title Section */
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .flower-icon {
+            font-size: 52px;
+            animation: floatFlower 2s ease-in-out infinite;
+        }
+
+        .typewriter-title {
+            overflow: hidden;
+            border-right: 3px solid black;
+            white-space: nowrap;
+            width: 0;
+            font-size: 42px;
+            font-weight: bold;
+            animation:
+                typing 3s steps(30, end) forwards,
+                blink 0.8s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        @keyframes floatFlower {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            color: #222;
+        }
+
+        input[type=file] {
+            margin: 20px 0;
+        }
+
+        img {
+            max-width: 400px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #12df1c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="title-wrapper">
+            <span class="flower-icon">🌸</span>
+            <h2 class="typewriter-title">Flower Classification App</h2>
+        </div>
+
+        <h2>Convolutional Neural Network</h2>
+
+        {% if msg %}
+            <h2>{{ msg }}</h2>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <h2>Prediction: {{ prediction }}</h2>
+        {% endif %}
+
+        {% if img_path %}
+            <img src="{{ img_path }}" alt="Uploaded Image">
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
