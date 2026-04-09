@@ -46,3 +46,4 @@ def predict_flower(img_path):
     class_name = LABEL_MAP.get(class_number, "Unknown")
 
     return img_path, class_name
+
