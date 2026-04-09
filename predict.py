@@ -8,8 +8,8 @@ from tensorflow.keras.preprocessing import image
 # -------------------------
 # Load trained model
 # -------------------------
-MODEL_PATH = "model/flower_cnn_model.h5"
-model = load_model(MODEL_PATH)
+MODEL_PATH = "model/flower_cnn_model.keras"
+model = load_model(MODEL_PATH, compile=False)
 
 # -------------------------
 # Get class names EXACTLY like training order
