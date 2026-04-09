@@ -7,11 +7,11 @@ from predict import predict_flower
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
-# Allowed image extensions
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -24,21 +24,33 @@ def index():
             msg = "No file selected"
         else:
             file = request.files['file']
+
             if file.filename == '':
                 msg = "No file selected"
+
             elif file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
+
+                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)  # Ensure folder exists
+
                 file.save(filepath)
 
-                # Predict
-                img_path, prediction = predict_flower(filepath)
+                # Prediction
+                prediction = predict_flower(filepath)
+                img_path = filepath
                 msg = "Prediction successful!"
+
             else:
-                msg = "Invalid file type. Only images allowed."
+                msg = "Invalid file type"
 
-    return render_template('index.html', prediction=prediction, img_path=img_path, msg=msg)
+    return render_template('index.html',
+                           prediction=prediction,
+                           img_path=img_path,
+                           msg=msg)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+# ✅ IMPORTANT FOR RENDER
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
