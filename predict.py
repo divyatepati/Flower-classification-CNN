@@ -10,10 +10,7 @@ model = load_model(MODEL_PATH, compile=False)
 
 TRAIN_DIR = "flowers/train"
 
-CLASS_NAMES = sorted([
-    folder for folder in os.listdir(TRAIN_DIR)
-    if os.path.isdir(os.path.join(TRAIN_DIR, folder))
-])
+CLASS_NAMES = [str(i) for i in range(1, 103)]
 
 with open("cat_to_name.json", "r") as f:
     LABEL_MAP = json.load(f)
